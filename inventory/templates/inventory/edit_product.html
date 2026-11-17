@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product | Inventory Management</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 30px 15px;
+            color: #1e293b;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 20px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h2 {
+            color: #2563eb;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .product-info {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 22px;
+            font-size: 14px;
+        }
+
+        form p {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+            color: #334155;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .helptext {
+            display: block;
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .errorlist {
+            color: #dc2626;
+            font-size: 13px;
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+
+        .form-errors {
+            color: #b91c1c;
+            background: #fee2e2;
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 15px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 13px;
+            border: none;
+            border-radius: 7px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .update-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .update-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .cancel-btn {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .cancel-btn:hover {
+            background: #cbd5e1;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h2>Edit Product Details</h2>
+        <p>Update your inventory product information</p>
+    </div>
+
+    <div class="product-info">
+        <strong>Product:</strong> {{ product.product_name }}
+        <br>
+        <strong>Product Code:</strong> {{ product.product_code }}
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {{ form.as_p }}
+
+        <div class="buttons">
+            <button type="submit" class="btn update-btn">
+                Update Product
+            </button>
+
+            <a href="{% url 'dashboard' %}" class="btn cancel-btn">
+                Cancel
+            </a>
+        </div>
+    </form>
+
+</div>
+
+</body>
+</html>

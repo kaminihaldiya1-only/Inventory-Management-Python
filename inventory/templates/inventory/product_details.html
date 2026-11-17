@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Inventory Management</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 30px 15px;
+            color: #1e293b;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 25px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            color: #2563eb;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .product-heading {
+            background: #eff6ff;
+            padding: 20px;
+            border-radius: 9px;
+            border-left: 4px solid #2563eb;
+            margin-bottom: 25px;
+        }
+
+        .product-heading h2 {
+            margin: 0 0 8px;
+            color: #1e40af;
+        }
+
+        .product-heading p {
+            margin: 0;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .section-title {
+            font-size: 17px;
+            color: #334155;
+            margin: 25px 0 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .detail {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 14px 10px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+        }
+
+        .detail strong {
+            color: #64748b;
+        }
+
+        .detail span {
+            color: #1e293b;
+            text-align: right;
+            overflow-wrap: anywhere;
+        }
+
+        .stock-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .low-stock {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .in-stock {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .description {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            color: #475569;
+            line-height: 1.6;
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 28px;
+            padding: 12px 22px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #1d4ed8;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+
+            .detail {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .detail span {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Product Details</h1>
+        <p>Complete information about your inventory product</p>
+    </div>
+
+    <div class="product-heading">
+        <h2>{{ product.product_name }}</h2>
+        <p>Product Code: {{ product.product_code }}</p>
+    </div>
+
+    <h3 class="section-title">Basic Information</h3>
+
+    <div class="detail">
+        <strong>Product Name</strong>
+        <span>{{ product.product_name }}</span>
+    </div>
+
+    <div class="detail">
+        <strong>Product Code</strong>
+        <span>{{ product.product_code }}</span>
+    </div>
+
+    <div class="detail">
+        <strong>Category</strong>
+        <span>{{ product.category }}</span>
+    </div>
+
+    <div class="detail">
+        <strong>Supplier</strong>
+        <span>{{ product.supplier }}</span>
+    </div>
+
+    <h3 class="section-title">Stock & Pricing</h3>
+
+    <div class="detail">
+        <strong>Quantity</strong>
+        <span>{{ product.quantity }}</span>
+    </div>
+
+    <div class="detail">
+        <strong>Stock Status</strong>
+        <span>
+            {% if product.quantity < 10 %}
+                <span class="stock-status low-stock">Low Stock</span>
+            {% else %}
+                <span class="stock-status in-stock">In Stock</span>
+            {% endif %}
+        </span>
+    </div>
+
+    <div class="detail">
+        <strong>Unit Price</strong>
+        <span>₹{{ product.price }}</span>
+    </div>
+
+    <div class="detail">
+        <strong>Total Inventory Value</strong>
+        <span>₹{{ product.price|floatformat:2 }} × {{ product.quantity }}</span>
+    </div>
+
+    <h3 class="section-title">Description</h3>
+
+    <div class="description">
+        {{ product.description|default:"No description available."|linebreaksbr }}
+    </div>
+
+    <h3 class="section-title">Record Information</h3>
+
+    <div class="detail">
+        <strong>Created At</strong>
+        <span>{{ product.created_at|date:"d-m-Y H:i" }}</span>
+    </div>
+
+    <div class="detail">
+        <strong>Last Updated</strong>
+        <span>{{ product.updated_at|date:"d-m-Y H:i" }}</span>
+    </div>
+
+    <a href="{% url 'dashboard' %}" class="back-btn">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

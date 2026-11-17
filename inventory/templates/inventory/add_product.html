@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product - Inventory Management</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 30px 15px;
+            color: #1e293b;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #334155;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.10);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .errorlist {
+            color: #dc2626;
+            font-size: 13px;
+            margin: 7px 0 0;
+            padding-left: 20px;
+        }
+
+        .form-errors {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        button, .cancel-btn {
+            flex: 1;
+            padding: 13px;
+            border: none;
+            border-radius: 7px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .cancel-btn {
+            background: #64748b;
+            color: white;
+        }
+
+        .cancel-btn:hover {
+            background: #475569;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h2>Add New Product</h2>
+        <p class="subtitle">
+            Enter product information to add it to your inventory.
+        </p>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="product_name">Product Name</label>
+            {{ form.product_name }}
+            {{ form.product_name.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="product_code">Product Code</label>
+            {{ form.product_code }}
+            {{ form.product_code.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="category">Category</label>
+            {{ form.category }}
+            {{ form.category.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            {{ form.description }}
+            {{ form.description.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            {{ form.quantity }}
+            {{ form.quantity.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price (₹)</label>
+            {{ form.price }}
+            {{ form.price.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="supplier">Supplier</label>
+            {{ form.supplier }}
+            {{ form.supplier.errors }}
+        </div>
+
+        <div class="buttons">
+
+            <button type="submit">
+                Save Product
+            </button>
+
+            <a href="{% url 'dashboard' %}" class="cancel-btn">
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>
